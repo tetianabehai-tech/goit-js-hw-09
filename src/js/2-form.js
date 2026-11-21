@@ -1,6 +1,6 @@
 const STORAGE_KEY = 'feedback-form-state';
 
-const formData = { email: '', message: '' };
+const formState = { email: '', message: '' };
 
 const form = document.querySelector('.feedback-form');
 
@@ -9,32 +9,32 @@ const savedData = localStorage.getItem(STORAGE_KEY);
 if (savedData) {
   const parsedData = JSON.parse(savedData);
 
-  formData.email = parsedData.email ?? '';
-  formData.message = parsedData.message ?? '';
+  formState.email = parsedData.email ?? '';
+  formState.message = parsedData.message ?? '';
 
-  form.elements.email.value = formData.email;
-  form.elements.message.value = formData.message;
+  form.elements.email.value = formState.email;
+  form.elements.message.value = formState.message;
 }
 
 form.addEventListener('input', event => {
   const { name, value } = event.target;
 
-  formData[name] = value.trim();
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
+  formState[name] = value.trim();
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(formState));
 });
 
 form.addEventListener('submit', event => {
   event.preventDefault();
 
-  if (formData.email === '' || formData.message === '') {
+  if (formState.email === '' || formState.message === '') {
     alert('Fill please all fields');
     return;
   }
 
-  console.log(formData);
+  console.log(formState);
 
   localStorage.removeItem(STORAGE_KEY);
   form.reset();
-  formData.email = '';
-  formData.message = '';
+  formState.email = '';
+  formState.message = '';
 });
